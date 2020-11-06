@@ -1,5 +1,5 @@
 import javafx.application.Application;
-
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
@@ -8,6 +8,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,43 +20,45 @@ public class Screen extends Application {
     @Override
     public void start(Stage stage) {
         // Label for name
-        Text info = new Text("Please draw the Braille characters on this tile and then we will send you the text!");
-        Text totalChars = new Text("Total Characters registered: ");
+        Text info = new Text("Please draw the Braille characters on the tile!");
+        Text totalChars = new Text("Characters: ");
         Text Chars = new Text("0");
-        Button convert = new Button("Convert To Text");
+        Button convert = new Button("TRANSLATE");
         convert.setVisible(false);
-        Button reset = new Button("Reset string");
+        Button reset = new Button("RESET");
         reset.setVisible(false);
+        GridPane gridPane = new GridPane();
 
-        Text text = new Text();
+        Label text = new Label();
+        text.setWrapText(true);
 
         char b[][] = {{'0','0'},{'0','0'},{'0','0'}};
-        int bArray[] = new int[20];
+        int bArray[] = new int[50];
         char bChar[] = new char[6];
         int[] chars = {0};
 
 
 
-        Circle circle1 = new Circle(20.0f, Color.WHITE);
-        circle1.setStroke(Color.BLACK);
+        Circle circle1 = new Circle(20.0f, Color.web("#F0F0F3"));
+        circle1.setStroke(Color.web("#728AB7"));
         
         
-        Circle circle2 = new Circle(20.0f, Color.WHITE);
-        circle2.setStroke(Color.BLACK);
+        Circle circle2 = new Circle(20.0f, Color.web("#F0F0F3"));
+        circle2.setStroke(Color.web("#728AB7"));
         
 
-        Circle circle3 = new Circle(20.0f, Color.WHITE);
-        circle3.setStroke(Color.BLACK);
+        Circle circle3 = new Circle(20.0f, Color.web("#F0F0F3"));
+        circle3.setStroke(Color.web("#728AB7"));
         
 
-        Circle circle4 = new Circle(20.0f, Color.WHITE);
-        circle4.setStroke(Color.BLACK);
+        Circle circle4 = new Circle(20.0f, Color.web("#F0F0F3"));
+        circle4.setStroke(Color.web("#728AB7"));
 
-        Circle circle5 = new Circle(20.0f, Color.WHITE);
-        circle5.setStroke(Color.BLACK);
+        Circle circle5 = new Circle(20.0f, Color.web("#F0F0F3"));
+        circle5.setStroke(Color.web("#728AB7"));
 
-        Circle circle6 = new Circle(20.0f, Color.WHITE);
-        circle6.setStroke(Color.BLACK);
+        Circle circle6 = new Circle(20.0f, Color.web("#F0F0F3"));
+        circle6.setStroke(Color.web("#728AB7"));
 
         Button capture = new Button("Capture");
 // Button Event Handlers
@@ -64,12 +67,12 @@ public class Screen extends Application {
                 for(int i=0;i<6; i++){
                     bChar[i] = '\0';
                 }
-                circle1.setFill(Color.WHITE);
-                circle2.setFill(Color.WHITE);
-                circle3.setFill(Color.WHITE);
-                circle4.setFill(Color.WHITE);
-                circle5.setFill(Color.WHITE);
-                circle6.setFill(Color.WHITE);
+                circle1.setFill(Color.web("#F0F0F3"));
+                circle2.setFill(Color.web("#F0F0F3"));
+                circle3.setFill(Color.web("#F0F0F3"));
+                circle4.setFill(Color.web("#F0F0F3"));
+                circle5.setFill(Color.web("#F0F0F3"));
+                circle6.setFill(Color.web("#F0F0F3"));
                 int c = 0;
                 for(int i=0; i<3; i++){
                         if(b[i][0] != '0'){
@@ -95,6 +98,7 @@ public class Screen extends Application {
                 chars[0] = chars[0] + 1;
                 convert.setVisible(true);
                 reset.setVisible(true);
+                gridPane.setStyle("-fx-background-image: url(./bg3.png);");
             }
         };
 
@@ -104,6 +108,7 @@ public class Screen extends Application {
                 try {
                     String decodedText = b.sendPOST(b.arr);
                     text.setText(decodedText.toUpperCase());
+                    gridPane.setStyle("-fx-background-image: url(./bg1.png);");
                 } catch (Exception err){
                     System.out.println(err);
                 }
@@ -112,12 +117,12 @@ public class Screen extends Application {
 
         EventHandler<ActionEvent> resetString = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                circle1.setFill(Color.WHITE);
-                circle2.setFill(Color.WHITE);
-                circle3.setFill(Color.WHITE);
-                circle4.setFill(Color.WHITE);
-                circle5.setFill(Color.WHITE);
-                circle6.setFill(Color.WHITE);
+                circle1.setFill(Color.web("#F0F0F3"));
+                circle2.setFill(Color.web("#F0F0F3"));
+                circle3.setFill(Color.web("#F0F0F3"));
+                circle4.setFill(Color.web("#F0F0F3"));
+                circle5.setFill(Color.web("#F0F0F3"));
+                circle6.setFill(Color.web("#F0F0F3"));
                 for(int i=0;i<chars[0]; i++){
                     bArray[i] = 9;
                 }
@@ -125,6 +130,7 @@ public class Screen extends Application {
                 chars[0] = 0;
                 convert.setVisible(false);
                 reset.setVisible(false);
+                gridPane.setStyle("-fx-background-image: url(./bg2.png);");
                 for (int i = 0; i < 6; i++) {
                     bChar[i] = '\0';
                 }
@@ -137,11 +143,11 @@ public class Screen extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if(b[0][0] == '0') {
-                    circle1.setFill(Color.BLACK);
+                    circle1.setFill(Color.web("#728AB7"));
                     b[0][0] = '1';
                 }
                 else {
-                    circle1.setFill(Color.WHITE);
+                    circle1.setFill(Color.web("#F0F0F3"));
                     b[0][0] = '0';
                 }
             }
@@ -151,10 +157,10 @@ public class Screen extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if (b[1][0] == '0'){
-                    circle2.setFill(Color.BLACK);
+                    circle2.setFill(Color.web("#728AB7"));
                     b[1][0] = '2';
                 } else {
-                    circle2.setFill(Color.WHITE);
+                    circle2.setFill(Color.web("#F0F0F3"));
                     b[1][0] = '0';
                 }
             }
@@ -164,11 +170,11 @@ public class Screen extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if (b[2][0] == '0') {
-                    circle3.setFill(Color.BLACK);
+                    circle3.setFill(Color.web("#728AB7"));
                     b[2][0] = '3';
                 }
                 else {
-                    circle3.setFill(Color.WHITE);
+                    circle3.setFill(Color.web("#F0F0F3"));
                     b[2][0] = '0';
                 }
 
@@ -179,10 +185,10 @@ public class Screen extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if (b[2][1] == '0'){
-                    circle6.setFill(Color.BLACK);
+                    circle6.setFill(Color.web("#728AB7"));
                     b[2][1] = '6';
                 }else{
-                    circle6.setFill(Color.WHITE);
+                    circle6.setFill(Color.web("#F0F0F3"));
                     b[2][1] = '0';
                 }
             }
@@ -192,10 +198,10 @@ public class Screen extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if (b[1][1] == '0'){
-                    circle5.setFill(Color.BLACK);
+                    circle5.setFill(Color.web("#728AB7"));
                     b[1][1] = '5';
                 } else {
-                    circle5.setFill(Color.WHITE);
+                    circle5.setFill(Color.web("#F0F0F3"));
                     b[1][1] = '0';
                 }
             }
@@ -205,10 +211,10 @@ public class Screen extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if (b[0][1] == '0'){
-                    circle4.setFill(Color.BLACK);
+                    circle4.setFill(Color.web("#728AB7"));
                     b[0][1] = '4';
                 } else {
-                    circle4.setFill(Color.WHITE);
+                    circle4.setFill(Color.web("#F0F0F3"));
                     b[0][1] = '0';
                 }
             }
@@ -220,10 +226,10 @@ public class Screen extends Application {
                 switch(key.getCode()){
                     case DIGIT1: {
                         if (b[0][0] == '0') {
-                            circle1.setFill(Color.BLACK);
+                            circle1.setFill(Color.web("#728AB7"));
                             b[0][0] = '1';
                         } else {
-                            circle1.setFill(Color.WHITE);
+                            circle1.setFill(Color.web("#F0F0F3"));
                             b[0][0] = '0';
                         }
                         break;
@@ -231,10 +237,10 @@ public class Screen extends Application {
 
                     case DIGIT2: {
                         if (b[1][0] == '0') {
-                            circle2.setFill(Color.BLACK);
+                            circle2.setFill(Color.web("#728AB7"));
                             b[1][0] = '2';
                         } else {
-                            circle2.setFill(Color.WHITE);
+                            circle2.setFill(Color.web("#F0F0F3"));
                             b[1][0] = '0';
                         }
                         break;
@@ -242,10 +248,10 @@ public class Screen extends Application {
 
                     case DIGIT3: {
                         if (b[2][0] == '0') {
-                            circle3.setFill(Color.BLACK);
+                            circle3.setFill(Color.web("#728AB7"));
                             b[2][0] = '3';
                         } else {
-                            circle3.setFill(Color.WHITE);
+                            circle3.setFill(Color.web("#F0F0F3"));
                             b[2][0] = '0';
                         }
                         break;
@@ -253,10 +259,10 @@ public class Screen extends Application {
 
                     case DIGIT4: {
                         if (b[0][1] == '0') {
-                            circle4.setFill(Color.BLACK);
+                            circle4.setFill(Color.web("#728AB7"));
                             b[0][1] = '4';
                         } else {
-                            circle4.setFill(Color.WHITE);
+                            circle4.setFill(Color.web("#F0F0F3"));
                             b[0][1] = '0';
                         }
                         break;
@@ -264,10 +270,10 @@ public class Screen extends Application {
 
                     case DIGIT5: {
                         if (b[1][1] == '0') {
-                            circle5.setFill(Color.BLACK);
+                            circle5.setFill(Color.web("#728AB7"));
                             b[1][1] = '5';
                         } else {
-                            circle5.setFill(Color.WHITE);
+                            circle5.setFill(Color.web("#F0F0F3"));
                             b[1][1] = '0';
                         }
                         break;
@@ -275,10 +281,10 @@ public class Screen extends Application {
 
                     case DIGIT6: {
                         if (b[2][1] == '0') {
-                            circle6.setFill(Color.BLACK);
+                            circle6.setFill(Color.web("#728AB7"));
                             b[2][1] = '6';
                         } else {
-                            circle6.setFill(Color.WHITE);
+                            circle6.setFill(Color.web("#F0F0F3"));
                             b[2][1] = '0';
                         }
                         break;
@@ -301,10 +307,9 @@ public class Screen extends Application {
         reset.setCancelButton(true);
 
         // Creating a Grid Pane
-        GridPane gridPane = new GridPane();
         GridPane circleGrid = new GridPane();
         // Setting size for the pane
-        gridPane.setMinSize(800, 600);
+        gridPane.setMinSize(600, 700);
         circleGrid.setMinSize(250,200);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         circleGrid.setPadding(new Insets(2, 2, 2, 2));
@@ -315,9 +320,7 @@ public class Screen extends Application {
         gridPane.setAlignment(Pos.CENTER);
         // gridPane.setGridLinesVisible(true);
         circleGrid.setAlignment(Pos.CENTER);
-        info.setWrappingWidth(600.0f);
         // circleGrid.setGridLinesVisible(true);
-
             circleGrid.add(circle1, 0, 0);
             circleGrid.add(circle2, 0, 1);
             circleGrid.add(circle3, 0, 2);
@@ -325,29 +328,37 @@ public class Screen extends Application {
             circleGrid.add(circle5, 1, 1);
             circleGrid.add(circle4, 1, 0);
         // Arranging all the nodes in the grid
-        gridPane.add(info, 0, 0, 4, 1);
-        gridPane.add(totalChars, 0,2);
+        gridPane.add(info, 0, 0, 2, 1);
+        gridPane.setHalignment(info, HPos.CENTER);
+        gridPane.add(totalChars, 0, 2);
+        gridPane.setHalignment(totalChars, HPos.RIGHT);
         gridPane.add(Chars, 1, 2);
         gridPane.add(circleGrid, 0, 3);
         gridPane.add(capture, 1, 3);
-        gridPane.add(convert, 0, 4);
-        gridPane.add(reset, 1, 4 );
-        gridPane.add(text, 0, 5, 3, 1);
+        gridPane.setHalignment(capture, HPos.LEFT);
+        gridPane.add(convert, 0, 5);
+        gridPane.setHalignment(convert, HPos.LEFT);
+        gridPane.add(reset, 1, 5 );
+        gridPane.setHalignment(reset, HPos.LEFT);
+        gridPane.add(text,0,7, 2, 1);
+        gridPane.setHalignment(text, HPos.CENTER);
 
         // Styling nodes
+        
 
         info.setStyle("-fx-font: normal 20px 'Ubuntu'; ");
         text.setStyle("-fx-font: bold 30px 'Ubuntu' ");
         totalChars.setStyle("-fx-font: normal 20px 'Ubuntu' ");
         Chars.setStyle("-fx-font: normal 20px 'Ubuntu' ");
         capture.setStyle("-fx-background-radius: 10em; " + "-fx-min-width: 100px; " + "-fx-min-height: 100px; "
-                + "-fx-max-width: 100px; " + "-fx-max-height: 100px;" + "-fx-font-size: 1.5em");
-        convert.setPrefWidth(300);
-        reset.setStyle("-fx-background-radius: 2em; -fx-background-color: #fa4947; -fx-font-weight: 700; -fx-text-base-color: white; -fx-font-size: 1.5em");
-        convert.setStyle("-fx-background-radius: 2em; -fx-background-color: #32b2ff; -fx-font-weight: 700;  -fx-text-base-color: white; -fx-font-size: 1.5em");
+                + "-fx-max-width: 100px; " + "-fx-max-height: 100px;" + "-fx-background-color: #F0F0F3; -fx-text-base-color: #728AB7; -fx-font-weight: 700; -fx-font-size: 1.2em");
+        convert.setPrefWidth(200);
+        // reset.setPrefWidth(300);
+        reset.setStyle("-fx-background-radius: 2em; -fx-background-color: #F0F0F3; -fx-font-weight: 700; -fx-text-base-color: red; -fx-font-size: 1.5em");
+        convert.setStyle("-fx-background-radius: 2em; -fx-background-color: #F0F0F3; -px-padding: 10px;  -fx-text-base-color: #728AB7; -fx-font-weight: 700; -fx-font-size: 1.5em");
 
         // Setting the back ground color
-        gridPane.setStyle("-fx-background-color: white;");
+        gridPane.setStyle("-fx-background-image: url(./bg2.png);");
         Scene scene = new Scene(gridPane);
         scene.setOnKeyPressed(handleKeyPress);
         stage.setTitle("Braille to Text");
